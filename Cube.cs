@@ -4,8 +4,6 @@ using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private CubeManager _cubeManager;
-    
     public float SplitChance { get; private set; } = 1f;
 
     public event Action<Cube> Splited;
@@ -25,7 +23,5 @@ public class Cube : MonoBehaviour
     public void Init(float splitChance)
     {
         SplitChance = splitChance;
-        
-        _cubeManager.AddCube(this);
     }
 }
