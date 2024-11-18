@@ -4,9 +4,9 @@ using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
-    public float SplitChance { get; private set; } = 1f;
-
     public event Action<Cube> Splited;
+    
+    public float SplitChance { get; private set; } = 1f;
     
     private void OnMouseDown()
     {
@@ -14,10 +14,8 @@ public class Cube : MonoBehaviour
         {
             Splited?.Invoke(this);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        
+        Destroy(gameObject);
     }
 
     public void Init(float splitChance)
