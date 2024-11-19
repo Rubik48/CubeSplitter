@@ -4,7 +4,8 @@ using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
-    public event Action<Cube> Splited;
+    public event Action<Cube> Splitted;
+    public event Action Destroyed;
     
     public float SplitChance { get; private set; } = 1f;
     
@@ -12,9 +13,13 @@ public class Cube : MonoBehaviour
     {
         if (Random.value <= SplitChance)
         {
-            Splited?.Invoke(this);
+            Splitted?.Invoke(this);
         }
-        
+        else
+        {
+            Destroyed?.Invoke();
+        }
+
         Destroy(gameObject);
     }
 

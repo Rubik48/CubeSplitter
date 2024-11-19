@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class CubeSpawner : MonoBehaviour
@@ -13,6 +13,8 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private Cube[] _existingCubes;
     
     private List<Cube> _cubes = new List<Cube>();
+    
+    public event Action<Cube> CubeCreated;
     
     private void Start()
     {
@@ -27,7 +29,7 @@ public class CubeSpawner : MonoBehaviour
         if (_cubes.Contains(cube) == false)
         {
             _cubes.Add(cube);
-            cube.Splited += SplitCube;
+            cube.Splitted += SplitCube;
         }
     }
 
@@ -36,7 +38,7 @@ public class CubeSpawner : MonoBehaviour
         if (_cubes.Contains(cube) == true)
         {
             _cubes.Remove(cube);
-            cube.Splited -= SplitCube;
+            cube.Splitted -= SplitCube;
         }
     }
     
@@ -53,6 +55,8 @@ public class CubeSpawner : MonoBehaviour
             newCube.transform.localScale = cube.transform.localScale * _scaleReduction;
             
             newCube.Init(cube.SplitChance / _reducerChance);
+            
+            CubeCreated?.Invoke(newCube);
             
             AddCube(newCube);
         }
